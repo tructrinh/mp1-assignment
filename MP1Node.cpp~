@@ -212,6 +212,24 @@ void MP1Node::checkMessages() {
         }
         return;
 }
+/**
+ * FUNCTION NAME: recvCallBack
+ *
+ * DESCRIPTION: Message handler for different message types
+ */
+void MP1Node::checkMessages() {
+        void *ptr;
+        int size;
+
+        // Pop waiting messages from memberNode's mp1q
+        while ( !memberNode->mp1q.empty() ) {
+                ptr = memberNode->mp1q.front().elt;
+                size = memberNode->mp1q.front().size;
+                memberNode->mp1q.pop();
+                recvCallBack((void *)memberNode, (char *)ptr, size);
+        }
+        return;
+}
 
 /**
  * FUNCTION NAME: recvCallBack
